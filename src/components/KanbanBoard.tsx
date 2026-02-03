@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import CreateJobApplicationDialog from "@/components/CreateJobApplicationDialog";
+import JobCard from "@/components/ui/JobCard";
 
 type KanbanBoardProps = {
   board: Board;
@@ -42,12 +43,14 @@ const KanbanItem = ({
   column,
   config,
   board,
+  sortedColumns,
 }: {
   column: Column;
   config: ColumnConfig;
   board: string;
+  sortedColumns?: Column[];
 }) => {
-  const sortedJob =
+  const sortedJobs =
     column.jobApplications.sort((a, b) => (a.order > b.order ? 1 : -1)) || [];
   return (
     <Card className="min-w-[300px] flex-shrink-0 shadow-md p-0">
@@ -80,26 +83,38 @@ const KanbanItem = ({
       </CardHeader>
 
       <CardContent className="space-y-2 pt-4 bg-gray-50/50 min-h-[400px] rounded-b-lg">
-        {sortedJob.map((job, key) => (
-          <></>
-          // <JobCard key={key} job={job} columns={[]} />
+        {sortedJobs.map((job, key) => (
+          <SortableJobCard
+            key={job._id || key}
+            job={{ ...job, columnId: job.columnId || column._id }}
+            columns={sortedColumns || []}
+          />
         ))}
+
         <CreateJobApplicationDialog columnId={column._id} boardId={board} />
       </CardContent>
     </Card>
   );
 };
 
-// const JobCard = ({
-//   job,
-//   columns,
-// }: {
-//   job: JobApplication;
-//   columns: Column[];
-// }) => {};
+const SortableJobCard = ({
+  job,
+  columns,
+}: {
+  job: JobApplication;
+  columns: Column[];
+}) => {
+  return (
+    <div>
+      <JobCard job={job} columns={columns} />
+    </div>
+  );
+};
 
 const KanbanBoard = ({ board, userId }: KanbanBoardProps) => {
   const columns = board.columns;
+  const sortedColumns =
+    columns.sort((a, b) => (a.order > b.order ? 1 : -1)) || [];
 
   return (
     <>
@@ -113,6 +128,7 @@ const KanbanBoard = ({ board, userId }: KanbanBoardProps) => {
                 column={col}
                 config={config}
                 board={board._id}
+                sortedColumns={sortedColumns}
               />
             );
           })}
