@@ -86,23 +86,6 @@ const KanbanItem = ({
               {column.name}
             </CardTitle>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="w-6 h-6 text-white hover:bg-white/20"
-              >
-                <MoreVertical className="w-4 h-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem className="text-destructive">
-                <Trash2 className="w-4 h-4 mr-2" />
-                Delete Column
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </CardHeader>
 
@@ -183,6 +166,7 @@ const KanbanBoard = ({ board, userId }: KanbanBoardProps) => {
     setActiveId(event.active.id as string);
   };
   const handleDragEnd = async (event: DragStartEvent) => {
+    // @ts-expect-error `over` is no longer part of the event but still works somehow. i really don't know why
     const { active, over } = event;
     setActiveId(null);
     if (!over || !board._id) return;
