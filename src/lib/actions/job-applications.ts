@@ -208,6 +208,23 @@ export const updateJobApplication = async (
     updatesToApply,
     { new: true },
   );
-
+  revalidatePath("/dashboard");
   return { data: JSON.parse(JSON.stringify(updated)) };
+};
+
+export const deleteJobApplication = async (jobApplicationId: string) => {
+  const session = await getSession();
+  if (!session?.user) return { error: "Unauthorized" };
+
+  const jobApplication = await JobApplication.findById(jobApplicationId);
+  if (!jobApplication) return { error: "Job Application not found" };
+  if (jobApplication.userId !== session.user.id)
+    return { error: "Unauthorized" };
+
+  await Column.findByIdAndUpdate(jobApplication.columnId, {
+    $pull: { jobApplications: jobApplicationId },
+  });
+  await JobApplication.deleteOne({ _id: jobApplicationId });
+  revalidatePath("/dashboard");
+  return { success: true };
 };
