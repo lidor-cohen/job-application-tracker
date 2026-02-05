@@ -8,7 +8,7 @@ const DEFAULT_COLUMNS = [
   { name: "Offer", order: 3 },
   { name: "Rejected", order: 4 },
 ];
-export default async function initUserBoard(userId: string) {
+export const initUserBoard = async (userId: string) => {
   try {
     await dbConnect();
     const existingBoard = await Board.findOne({ userId, name: "Job Hunt" });
@@ -37,4 +37,4 @@ export default async function initUserBoard(userId: string) {
 
     return board;
   } catch (err) {}
-}
+};
