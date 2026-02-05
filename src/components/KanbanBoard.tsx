@@ -24,6 +24,7 @@ import { useBoard } from "@/lib/hooks/useBoards";
 import {
   closestCorners,
   DndContext,
+  DragOverlay,
   DragStartEvent,
   PointerSensor,
   useDroppable,
@@ -272,6 +273,9 @@ const KanbanBoard = ({ board, userId }: KanbanBoardProps) => {
     await moveJob(activeId, targetColumnId, newOrder);
   };
 
+  const activeJob = sortedColumns
+    .flatMap((col) => col.jobApplications || [])
+    .find((job) => job._id === activeId);
   return (
     <DndContext
       sensors={sensors}
@@ -281,7 +285,7 @@ const KanbanBoard = ({ board, userId }: KanbanBoardProps) => {
     >
       <div className="space-y-4">
         <div className="flex gap-4 overflow-x-auto pb-4">
-          {columns.map((col, key) => {
+          {sortedColumns.map((col, key) => {
             const config = COLUMN_CONFIG[key % COLUMN_CONFIG.length];
             return (
               <KanbanItem
@@ -295,6 +299,14 @@ const KanbanBoard = ({ board, userId }: KanbanBoardProps) => {
           })}
         </div>
       </div>
+
+      <DragOverlay>
+        {activeJob ? (
+          <div className="opacity-50">
+            <JobCard job={activeJob} columns={sortedColumns} />
+          </div>
+        ) : null}
+      </DragOverlay>
     </DndContext>
   );
 };
