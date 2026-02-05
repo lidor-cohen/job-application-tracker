@@ -4,7 +4,6 @@ import { getSession } from "@/lib/auth/auth";
 import dbConnect from "@/lib/mongodb";
 import { Board } from "@/lib/models";
 import KanbanBoard from "@/components/KanbanBoard";
-import initUserBoard from "@/lib/initUserBoard";
 
 const getBoard = async (userId: string) => {
   "use cache";
