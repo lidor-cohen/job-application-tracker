@@ -8,12 +8,12 @@ A **full-stack job application management tool** built with **Next.js**, **React
 
 ## 🚀 Features
 
-✅ Track job applications across multiple stages
-✅ Drag & drop interface (Kanban-style)
-✅ Persistent data with **MongoDB**
-✅ Built with cutting-edge React & Next.js
-✅ Authentication with **better-auth**
-✅ Tailwind CSS for rapid UI styling
+✅ Track job applications across multiple stages <br/>
+✅ Drag & drop interface (Kanban-style) <br/>
+✅ Persistent data with **MongoDB** <br/>
+✅ Built with cutting-edge React & Next.js <br/>
+✅ Authentication with **better-auth** <br/>
+✅ Tailwind CSS for rapid UI styling <br/>
 
 ---
 
@@ -130,10 +130,9 @@ src/
 
 This project was built to solve the common problem of tracking **job applications without chaos** — replacing spreadsheets with a clear and interactive board that helps users visualize their job search at a glance.
 
-It’s also a great demonstration of:
-
-✨ Modern React & Next.js patterns
-⚡ Server-centric full-stack app design
-📌 Integration of drag-and-drop with persistent backend
-🛡 Authentication & data security
+It’s also a great demonstration of: <br/>
+✨ Modern React & Next.js patterns <br/>
+⚡ Server-centric full-stack app design <br/>
+📌 Integration of drag-and-drop with persistent backend <br/>
+🛡 Authentication & data security <br/>
 
